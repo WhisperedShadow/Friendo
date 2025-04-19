@@ -1,4 +1,4 @@
-const socket = io();
+const socket = io("/");
 
 const status = document.getElementById("status");
 const chatBox = document.getElementById("chat-box");
