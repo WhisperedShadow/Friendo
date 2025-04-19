@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Friendo - Random Chat with Interests</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="shortcut icon" href="https://cdn-icons-png.freepik.com/512/4126/4126642.png" type="image/x-icon">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- Theme loading based on saved preference -->
+    <script>
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "light") {
+        document.documentElement.setAttribute("data-theme", "light");
+      }
+    </script>
+  </head>
+  <body>
+    <div class="chat-container">
+      <div class="theme-toggle">
+        <label class="switch">
+          <input type="checkbox" id="theme-toggle-checkbox" />
+          <span class="slider"></span>
+        </label>
+        <span id="theme-label">🌙</span>
+      </div>
+
+      <h2><i class="fas fa-comments"></i> Friendo - Random Chat</h2>
+      <div id="status">Enter your interests & join...</div>
+
+      <div id="chat-box"></div>
+
+      <input
+        type="text"
+        id="interest-input"
+        placeholder="(Optional) Your Interests (e.g. anime coding)"
+      />
+
+      <div class="buttons">
+        <button id="join-btn">
+          <i class="fas fa-user-plus"></i> Join Chat
+        </button>
+        <button id="disconnect-btn" disabled>
+          <i class="fas fa-sign-out-alt"></i> Disconnect
+        </button>
+      </div>
+
+      <div class="input-row">
+        <input
+          type="text"
+          id="message-input"
+          placeholder="Type a message..."
+          autocomplete="off"
+        />
+        <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+      </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="scripts.js"></script>
+
+    <!-- 🌗 Theme toggle script -->
+    <script>
+      const themeToggle = document.getElementById("theme-toggle-checkbox");
+      const themeLabel = document.getElementById("theme-label");
+
+      // Set checkbox state based on theme
+      const isLight = localStorage.getItem("theme") === "light";
+      themeToggle.checked = isLight;
+      themeLabel.textContent = isLight ? "☀️" : "🌙";
+
+      themeToggle.addEventListener("change", () => {
+        const currentTheme = document.documentElement.getAttribute("data-theme");
+        if (currentTheme === "light") {
+          document.documentElement.removeAttribute("data-theme");
+          localStorage.removeItem("theme");
+          themeLabel.textContent = "🌙";
+        } else {
+          document.documentElement.setAttribute("data-theme", "light");
+          localStorage.setItem("theme", "light");
+          themeLabel.textContent = "☀️";
+        }
+      });
+    </script>
+  </body>
+</html>
